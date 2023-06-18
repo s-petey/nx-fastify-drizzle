@@ -37,3 +37,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Drizzle
+drizzle
+drizzle_test
+drizzle.sqlite
+drizzle.test.sqlite
