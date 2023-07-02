@@ -1,0 +1,36 @@
+{
+  "name": "sql-definitions",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/sql-definitions/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/sql-definitions/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/sql-definitions/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "drizzle:generate": {
+      "command": "drizzle-kit generate:sqlite --config=packages/sql-definitions/src/drizzle.config.ts"
+    },
+    "drizzle:generate:test": {
+      "command": "rm -f drizzle.test.sqlite && drizzle-kit generate:sqlite --config=packages/sql-definitions/src/drizzle.config.ts"
+    }
+  },
+  "tags": []
+}

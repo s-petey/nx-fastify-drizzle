@@ -3,10 +3,8 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/api/src",
   "projectType": "application",
+  "implicitDependencies": ["sql-definitions"],
   "targets": {
-    "drizzle:generate": {
-      "command": "drizzle-kit generate:sqlite --config=packages/api/drizzle.config.ts"
-    },
     "build": {
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
@@ -63,7 +61,7 @@
       }
     },
     "test": {
-      "dependsOn": ["drizzle:generate"],
+      "dependsOn": ["^drizzle:generate"],
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
@@ -77,11 +75,8 @@
         }
       }
     },
-    "drizzle:generate:test": {
-      "command": "rm -f drizzle.test.sqlite && drizzle-kit generate:sqlite --config=packages/api/drizzle.config.ts"
-    },
     "tdd": {
-      "dependsOn": ["drizzle:generate:test"],
+      "dependsOn": ["^drizzle:generate:test"],
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {

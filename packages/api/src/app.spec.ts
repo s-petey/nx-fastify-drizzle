@@ -1,8 +1,8 @@
 import Fastify, { FastifyInstance } from 'fastify';
+import { InsertUser, makeUser, users } from 'sql-definitions';
 import { app } from './app';
-import { userDegenerate, userGenerate } from './testUtils/user.generator';
-import { InsertUser, Users } from './database/schema';
-import { SQLiteInsert, SQLiteTableWithColumns } from 'drizzle-orm/sqlite-core';
+import { db } from './database';
+import { eq } from 'drizzle-orm';
 
 let server: FastifyInstance;
 
@@ -50,13 +50,14 @@ describe('GET /users/{id}', () => {
     let testUser: InsertUser;
 
     beforeAll(async () => {
-      testUser = await userGenerate();
+      testUser = await db.insert(users).values(makeUser()).returning().get();
     });
 
     afterAll(async () => {
-      await userDegenerate({
-        id: Number(1111),
-      });
+      await db
+        .delete(users)
+        .where(eq(users.id, Number(1111)))
+        .run();
     });
 
     it('should find a user', async () => {

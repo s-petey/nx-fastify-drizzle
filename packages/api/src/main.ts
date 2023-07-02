@@ -3,10 +3,27 @@ import { app } from './app';
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+const environment = process.env.NODE_ENV;
+
+console.log('environment', environment);
+
+const envToLogger = {
+  development: {
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        translateTime: 'HH:MM:ss Z',
+        ignore: 'pid,hostname',
+      },
+    },
+  },
+  production: true,
+  test: false,
+};
 
 // Instantiate Fastify with some config
 const server = Fastify({
-  logger: true,
+  logger: envToLogger[environment] ?? true,
 });
 
 // Register your application as a normal plugin.
@@ -19,5 +36,6 @@ server.listen({ port, host }, (err) => {
     process.exit(1);
   } else {
     console.log(`[ ready ] http://${host}:${port}`);
+    console.log(server.printRoutes());
   }
 });
