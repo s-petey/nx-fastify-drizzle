@@ -1,5 +1,5 @@
 import Fastify, { FastifyInstance } from 'fastify';
-import { InsertUser, makeUser, users } from 'sql-definitions';
+import { UsersInsert, makeInsertUser, users } from 'sql-definitions';
 import { app } from './app';
 import { db } from './database';
 import { eq } from 'drizzle-orm';
@@ -47,17 +47,14 @@ describe('GET /users/{id}', () => {
   });
 
   describe('generate and degenerate user', () => {
-    let testUser: InsertUser;
+    let testUser: UsersInsert;
 
     beforeAll(async () => {
-      testUser = await db.insert(users).values(makeUser()).returning().get();
+      testUser = await db.insert(users).values(makeInsertUser()).returning().get();
     });
 
     afterAll(async () => {
-      await db
-        .delete(users)
-        .where(eq(users.id, Number(1111)))
-        .run();
+      await db.delete(users).where(eq(users.id, testUser.id)).run();
     });
 
     it('should find a user', async () => {
