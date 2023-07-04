@@ -22,7 +22,7 @@ importers:
         version: 8.4.0
       drizzle-orm:
         specifier: 0.27.0
-        version: 0.27.0(better-sqlite3@8.4.0)
+        version: 0.27.0(better-sqlite3@8.4.0)(kysely@0.25.0)
       drizzle-zod:
         specifier: 0.4.4
         version: 0.4.4(drizzle-orm@0.27.0)(zod@3.21.4)
@@ -32,6 +32,9 @@ importers:
       fastify-plugin:
         specifier: ~4.5.0
         version: 4.5.0
+      kysely:
+        specifier: 0.25.0
+        version: 0.25.0
       tslib:
         specifier: ^2.5.3
         version: 2.5.3
@@ -82,7 +85,7 @@ importers:
         specifier: ^0.19.0
         version: 0.19.0
       esbuild:
-        specifier: ^0.17.5
+        specifier: ^0.17.17
         version: 0.17.19
       eslint:
         specifier: ~8.43.0
@@ -3699,7 +3702,7 @@ packages:
       zod: 3.21.4
     dev: true
 
-  /drizzle-orm@0.27.0(better-sqlite3@8.4.0):
+  /drizzle-orm@0.27.0(better-sqlite3@8.4.0)(kysely@0.25.0):
     resolution: {integrity: sha512-LGiJ0icB+wQwgbSCOvAjONY8Ec6G/EDzQQP5PmUaQYeI9OqgpVKHC2T1fFIbvk5dabWsbokJ5NOciVAxriStig==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -3762,6 +3765,7 @@ packages:
         optional: true
     dependencies:
       better-sqlite3: 8.4.0
+      kysely: 0.25.0
     dev: false
 
   /drizzle-zod@0.4.4(drizzle-orm@0.27.0)(zod@3.21.4):
@@ -3770,7 +3774,7 @@ packages:
       drizzle-orm: '>=0.23.13'
       zod: '*'
     dependencies:
-      drizzle-orm: 0.27.0(better-sqlite3@8.4.0)
+      drizzle-orm: 0.27.0(better-sqlite3@8.4.0)(kysely@0.25.0)
       zod: 3.21.4
     dev: false
 
@@ -5175,6 +5179,11 @@ packages:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
     engines: {node: '>=6'}
     dev: true
+
+  /kysely@0.25.0:
+    resolution: {integrity: sha512-srn0efIMu5IoEBk0tBmtGnoUss4uwvxtbFQWG/U2MosfqIace1l43IFP1PmEpHRDp+Z79xIcKEqmHH3dAvQdQA==}
+    engines: {node: '>=14.0.0'}
+    dev: false
 
   /leven@3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
