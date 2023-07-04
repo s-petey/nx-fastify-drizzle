@@ -14,7 +14,7 @@ WORKDIR /app
 RUN addgroup --system api && \
           adduser --system -G api api
 
-COPY dist/packages/api api
+COPY dist/packages/drizzle-api/api api
 RUN chown -R api:api .
 
 # You can remove this install step if you build with `--bundle` option.

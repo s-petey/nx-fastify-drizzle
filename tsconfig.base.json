@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "sql-definitions": ["packages/sql-definitions/src/index.ts"]
+      "sql-definitions": ["packages/drizzle-api/sql-definitions/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
