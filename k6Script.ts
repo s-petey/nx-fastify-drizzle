@@ -12,14 +12,14 @@ export const options = {
   //   { duration: '5m', target: 0 }, // ramp-down to 0 users
   // ],
   stages: [
-    { duration: '30s', target: 100 },
-    { duration: '1m', target: 100 },
-    { duration: '30s', target: 0 },
+    { duration: '30s', target: 1000 },
+    // { duration: '1m', target: 100 },
+    // { duration: '30s', target: 0 },
   ],
 };
 
 export default function () {
   http.get('http://host.docker.internal:3000/users');
 
-  sleep(1);
+  // sleep(1);
 }

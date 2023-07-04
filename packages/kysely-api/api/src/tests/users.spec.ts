@@ -4,39 +4,30 @@ import {
   Users,
   makeInsertUser,
 } from 'packages/kysely-api/kysely-definitions/src';
-import { app } from './app';
-import { db } from './database';
+import { app } from '../app';
+import { db } from '../database';
 
-describe('GET /', () => {
-  let server: FastifyInstance;
+let server: FastifyInstance;
 
-  beforeEach(() => {
-    server = Fastify();
-    server.register(app);
-  });
+beforeEach(async () => {
+  server = Fastify();
+  await server.register(app);
+});
 
-  describe('GET /', () => {
-    it('should respond with a message', async () => {
-      const response = await server.inject({
-        method: 'GET',
-        url: '/',
-      });
+afterAll(async () => {
+  await server.close();
+});
 
-      expect(response.json()).toEqual({ message: 'Hello API' });
+describe('users', () => {
+  it('GET /users should respond with an array of users', async () => {
+    const response = await server.inject({
+      method: 'GET',
+      url: '/users',
     });
-  });
 
-  describe('GET /users', () => {
-    it('should respond with an array of users', async () => {
-      const response = await server.inject({
-        method: 'GET',
-        url: '/users',
-      });
+    const data = response.json();
 
-      const data = response.json();
-
-      expect(data.users).toBeInstanceOf(Array);
-    });
+    expect(Array.isArray(data.users)).toBeTruthy();
   });
 
   describe('GET /users/{id}', () => {
@@ -48,6 +39,36 @@ describe('GET /', () => {
       });
 
       expect(response.statusCode).toBe(404);
+    });
+
+    describe('create and delete', () => {
+      let testUser: Users;
+
+      afterAll(async () => {
+        await db
+          .deleteFrom('users')
+          .where('id', '=', Number(testUser.id))
+          .execute();
+      });
+
+      it('should create a user', async () => {
+        const tempUser = makeInsertUser();
+        const response = await server.inject({
+          method: 'POST',
+          url: `/users`,
+          body: {
+            name: tempUser.name,
+            email: tempUser.email,
+          },
+        });
+
+        const data = response.json();
+
+        expect(typeof data.user).toBe('object');
+        testUser = data.user;
+
+        expect(typeof data.user.id).toBe('number');
+      });
     });
 
     describe('generate and degenerate user', () => {
