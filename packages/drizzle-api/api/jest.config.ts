@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'api',
+  displayName: 'drizzle-api',
   preset: '../../../jest.preset.js',
   testEnvironment: 'node',
   transform: {

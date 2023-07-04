@@ -1,9 +1,9 @@
 {
-  "name": "api",
+  "name": "drizzle-api",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/drizzle-api/api/src",
   "projectType": "application",
-  "implicitDependencies": ["sql-definitions"],
+  "implicitDependencies": ["drizzle-definitions"],
   "targets": {
     "build": {
       "executor": "@nx/esbuild:esbuild",
@@ -42,14 +42,14 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "api:build"
+        "buildTarget": "drizzle-api:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "api:build:development"
+          "buildTarget": "drizzle-api:build:development"
         },
         "production": {
-          "buildTarget": "api:build:production"
+          "buildTarget": "drizzle-api:build:production"
         }
       }
     },

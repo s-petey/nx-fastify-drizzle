@@ -1,5 +1,10 @@
 import Fastify, { FastifyInstance } from 'fastify';
-import { UsersInsert, makeInsertUser, users } from 'sql-definitions';
+// TODO: FIXME IMPORTS
+import {
+  UsersInsert,
+  makeInsertUser,
+  users,
+} from 'packages/drizzle-api/drizzle-definitions/src';
 import { app } from './app';
 import { db } from './database';
 import { eq } from 'drizzle-orm';
@@ -50,7 +55,11 @@ describe('GET /users/{id}', () => {
     let testUser: UsersInsert;
 
     beforeAll(async () => {
-      testUser = await db.insert(users).values(makeInsertUser()).returning().get();
+      testUser = await db
+        .insert(users)
+        .values(makeInsertUser())
+        .returning()
+        .get();
     });
 
     afterAll(async () => {

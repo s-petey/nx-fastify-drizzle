@@ -1,7 +1,8 @@
 import { eq } from 'drizzle-orm';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { db } from '../database';
-import { Users, users } from 'sql-definitions';
+// TODO: FIXME IMPORTS
+import { Users, users } from 'packages/drizzle-api/drizzle-definitions/src';
 
 export default async function (fastify: FastifyInstance) {
   fastify.get(

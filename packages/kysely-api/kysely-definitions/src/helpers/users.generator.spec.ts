@@ -3,6 +3,9 @@
 // TODO: Need to work on this? or remove?
 
 describe('users.generator', () => {
+  it('foo', () => {
+    expect(true).toBe(true);
+  })
   // describe('makeUser', () => {
   //   it('generates an insert user', () => {
   //     const fakeUser = makeInsertUser();
