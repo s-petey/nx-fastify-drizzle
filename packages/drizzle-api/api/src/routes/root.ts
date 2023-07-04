@@ -2,7 +2,9 @@ import { eq } from 'drizzle-orm';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { db } from '../database';
 // TODO: FIXME IMPORTS
-import { Users, users } from 'packages/drizzle-api/drizzle-definitions/src';
+// import { Users, users } from 'packages/drizzle-api/drizzle-definitions/src';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { Users, users } from '../../../drizzle-definitions/src'; //' drizzle-definitions/src';
 
 export default async function (fastify: FastifyInstance) {
   fastify.get(

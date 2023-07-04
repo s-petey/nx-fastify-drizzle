@@ -89,6 +89,9 @@
         }
       }
     },
+    "k6": {
+      "command": "docker run --rm -i grafana/k6 run - <k6Script.ts"
+    },
     "docker-build": {
       "dependsOn": ["build"],
       "command": "docker build -f packages/kysely-api/api/Dockerfile . -t kysely-api"
