@@ -2,12 +2,13 @@ import { InferModel } from 'drizzle-orm';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { int, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { z } from 'zod';
+import { cities } from './cities';
 
 export const users = sqliteTable('users', {
   id: int('id').primaryKey(),
   name: text('name').notNull(),
   email: text('email').notNull(),
-  cityId: int('city_id'),
+  cityId: int('city_id').references(() => cities.id),
 });
 
 export const insertUserSchema = createInsertSchema(users);
