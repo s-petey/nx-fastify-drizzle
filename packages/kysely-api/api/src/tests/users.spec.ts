@@ -30,6 +30,36 @@ describe('users', () => {
     expect(Array.isArray(data.users)).toBeTruthy();
   });
 
+  describe('create and delete', () => {
+    let testUser: Users;
+
+    afterAll(async () => {
+      await db
+        .deleteFrom('users')
+        .where('id', '=', Number(testUser.id))
+        .execute();
+    });
+
+    it('should create a user', async () => {
+      const tempUser = makeInsertUser();
+      const response = await server.inject({
+        method: 'POST',
+        url: `/users`,
+        body: {
+          name: tempUser.name,
+          email: tempUser.email,
+        },
+      });
+
+      const data = response.json();
+
+      expect(typeof data.user).toBe('object');
+      testUser = data.user;
+
+      expect(typeof data.user.id).toBe('number');
+    });
+  });
+
   describe('GET /users/{id}', () => {
     it('should respond with a 404', async () => {
       const testId = '1234';
@@ -39,36 +69,6 @@ describe('users', () => {
       });
 
       expect(response.statusCode).toBe(404);
-    });
-
-    describe('create and delete', () => {
-      let testUser: Users;
-
-      afterAll(async () => {
-        await db
-          .deleteFrom('users')
-          .where('id', '=', Number(testUser.id))
-          .execute();
-      });
-
-      it('should create a user', async () => {
-        const tempUser = makeInsertUser();
-        const response = await server.inject({
-          method: 'POST',
-          url: `/users`,
-          body: {
-            name: tempUser.name,
-            email: tempUser.email,
-          },
-        });
-
-        const data = response.json();
-
-        expect(typeof data.user).toBe('object');
-        testUser = data.user;
-
-        expect(typeof data.user.id).toBe('number');
-      });
     });
 
     describe('generate and degenerate user', () => {

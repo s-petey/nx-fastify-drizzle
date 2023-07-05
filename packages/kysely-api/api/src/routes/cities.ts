@@ -11,6 +11,31 @@ export default async function (fastify: FastifyInstance) {
     }
   );
 
+  fastify.post(
+    '/cities',
+    async function (
+      request: FastifyRequest<{
+        Body: Omit<Partial<CitiesUpdate>, 'id'>;
+      }>,
+      reply: FastifyReply
+    ) {
+      const { body } = request;
+      if (typeof body?.name !== 'string')
+        throw new Error('Invalid params, missing name');
+
+      const setValues: Partial<CitiesUpdate> = {};
+      setValues.name = body.name;
+
+      const updatedCity = await db
+        .insertInto('cities')
+        .values(setValues)
+        .returningAll()
+        .executeTakeFirstOrThrow();
+
+      return { city: updatedCity };
+    }
+  );
+
   fastify.get(
     '/cities/:cityId',
     async function (

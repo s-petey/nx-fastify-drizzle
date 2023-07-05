@@ -30,6 +30,35 @@ describe('cities', () => {
     expect(data.cities).toBeInstanceOf(Array);
   });
 
+  describe('create and delete', () => {
+    let testCity: Cities;
+
+    afterAll(async () => {
+      await db
+        .deleteFrom('cities')
+        .where('id', '=', Number(testCity.id))
+        .execute();
+    });
+
+    it('should create a city', async () => {
+      const tempCity = makeInsertCity();
+      const response = await server.inject({
+        method: 'POST',
+        url: `/cities`,
+        body: {
+          name: tempCity.name,
+        },
+      });
+
+      const data = response.json();
+
+      expect(typeof data.city).toBe('object');
+      testCity = data.city;
+
+      expect(typeof data.city.id).toBe('number');
+    });
+  });
+
   describe('GET /cities/{id}', () => {
     it('should respond with a 404', async () => {
       const testId = '1234';
@@ -72,12 +101,12 @@ describe('cities', () => {
       });
 
       it('should update cities name', async () => {
-        const testUsername = 'awww shoot';
+        const testCityName = 'awww shoot';
         const response = await server.inject({
           method: 'PATCH',
           url: `/cities/${testCity.id}`,
           body: {
-            name: testUsername,
+            name: testCityName,
           },
         });
 
@@ -85,7 +114,7 @@ describe('cities', () => {
 
         expect(typeof data.city.id).toBe('number');
         expect(data.city.id).toBe(testCity.id);
-        expect(data.city.name).toBe(testUsername);
+        expect(data.city.name).toBe(testCityName);
       });
 
       it('should delete the city', async () => {
