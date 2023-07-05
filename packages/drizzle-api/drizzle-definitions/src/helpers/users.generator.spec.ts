@@ -9,6 +9,13 @@ describe('users.generator', () => {
       expect(insertUserSchema.safeParse(fakeUser).success).toBeTruthy();
     });
 
+    it('generates an insert user', () => {
+      const fakeUser = makeInsertUser();
+      const parsed = insertUserSchema.parse(fakeUser)
+
+      expect(parsed);
+    });
+
     it('should not generate an id', () => {
       const fakeUser = makeInsertUser();
 

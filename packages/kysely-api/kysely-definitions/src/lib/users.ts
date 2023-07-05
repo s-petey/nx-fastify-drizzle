@@ -9,6 +9,7 @@ export interface UsersTable {
   id: Generated<number>;
   name: string;
   email: string;
+  // TODO: Add FK to CitiesTable
   city_id: number | null;
 }
 
